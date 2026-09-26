@@ -41,12 +41,24 @@ tasks.register('installBrowsers', JavaExec) {
     args 'install'
 }
 
+tasks.register('installPlaywrightDeps', JavaExec) {
+    group = 'playwright'
+    description = 'Install OS dependencies for Playwright browsers.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.microsoft.playwright.CLI'
+    args 'install-deps'
+}
+
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
 test {
     useJUnitPlatform()
+    
+    // Pass all system properties to the test JVM
+    systemProperties System.properties
+
     // Optional: output test progress to console
     testLogging {
         events "passed", "skipped", "failed"
