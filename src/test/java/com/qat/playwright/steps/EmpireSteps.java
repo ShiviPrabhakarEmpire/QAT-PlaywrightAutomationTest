@@ -69,12 +69,12 @@ public class EmpireSteps {
         page = context.newPage();
     }
 
-    @When("I navigate to {string}")
+    @When("I navigate to the Empire page {string}")
     public void i_navigate_to(String url) {
         page.navigate(url);
     }
 
-    @Then("the page title should contain {string}")
+    @Then("the Empire page title should contain {string}")
     public void the_page_title_should_contain(String expectedTitle) {
         Assertions.assertTrue(page.title().contains(expectedTitle));
     }

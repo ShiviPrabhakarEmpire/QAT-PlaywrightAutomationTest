@@ -6,7 +6,7 @@ Feature: Empire Life Homepage Navigation
   @EN
   Scenario Outline: Verify main navigation links
     Given I launch the browser
-    And I navigate to "https://www.empire.ca/"
+    And I navigate to the Empire page "https://www.empire.ca/"
     When I click on the "<menu_item>" link
     Then I should be redirected to a page containing "<expected_url_path>"
 
@@ -19,7 +19,7 @@ Feature: Empire Life Homepage Navigation
   @FR
   Scenario Outline: Verify main navigation links in French
     Given I launch the browser
-    And I navigate to "https://www.empire.ca/fr"
+    And I navigate to the Empire page "https://www.empire.ca/fr"
     When I click on the "<menu_item>" link
     Then I should be redirected to a page containing "<expected_url_path>"
 
