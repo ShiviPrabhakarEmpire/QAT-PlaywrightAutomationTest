@@ -4,6 +4,9 @@ import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
+import com.microsoft.playwright.options.WaitForSelectorState;
 import com.qat.playwright.BrowserLauncher;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -11,6 +14,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
+
+import java.util.regex.Pattern;
+
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class EmpireSteps {
 
@@ -72,6 +79,7 @@ public class EmpireSteps {
     @When("I navigate to the Empire page {string}")
     public void i_navigate_to(String url) {
         page.navigate(url);
+        page.waitForLoadState(LoadState.LOAD);
     }
 
     @Then("the Empire page title should contain {string}")
@@ -93,11 +101,23 @@ public class EmpireSteps {
         openMobileMenuIfPresent();
         // Force click is used because Empire's mega-menu links might be hidden 
         // under dropdown wrappers depending on viewport or hover state.
-        page.locator("text=" + linkText).first().click(new com.microsoft.playwright.Locator.ClickOptions().setForce(true));
+        //page.locator("text=" + linkText).first().click(new com.microsoft.playwright.Locator.ClickOptions().setForce(true));
+        //page.locator("a.we-mega-menu-li[href='/insurance']").first().click();
+        page.locator("a.we-mega-menu-li[href*='/insurance'], a.we-mega-menu-li[href*='/assurance']").first().click();
     }
-
     @Then("I should be redirected to a page containing {string}")
     public void i_should_be_redirected_to_a_page_containing(String expectedPath) {
+        page.locator("a.we-mega-menu-li[href*='/term-life-insurance'], a.we-mega-menu-li[href*='/assurance-vie-temporaire']")
+                .first().click();
+        page.waitForLoadState(LoadState.LOAD);
+        //page.waitForURL("**" + expectedPath + "**");
+        page.waitForURL(Pattern.compile(".*" + Pattern.quote(expectedPath) + ".*"));
+        Assertions.assertTrue(page.url().contains(expectedPath));
+        assertThat(page).hasURL(Pattern.compile(".*(insurance/term-life-insurance|assurance/assurance-vie-temporaire).*"));
+        assertThat(page.getByRole(AriaRole.HEADING,new Page.GetByRoleOptions().setName(Pattern.compile("^(Term Life Insurance|Assurance vie temporaire)$", Pattern.CASE_INSENSITIVE))).first()).isVisible();
+    }
+    @Then("I should be redirected to a page URL containing {string}")
+    public void i_should_be_redirected_to_a_page_url_containing(String expectedPath) {
         page.waitForURL("**" + expectedPath + "**");
         Assertions.assertTrue(page.url().contains(expectedPath));
     }
@@ -106,8 +126,19 @@ public class EmpireSteps {
     public void i_search_for(String searchTerm) {
         openMobileMenuIfPresent();
         // On mobile, the search might be inside the menu or toggled differently, force it.
-        page.locator("input[name='search']").first().fill(searchTerm);
-        page.locator("input#edit-submit-acquia-search").first().click(new com.microsoft.playwright.Locator.ClickOptions().setForce(true));
+        //page.locator("input[name='search']").first().fill(searchTerm);
+        //page.locator("input#edit-submit-acquia-search").first().click(new com.microsoft.playwright.Locator.ClickOptions().setForce(true));
+        // 1. Click Search toggle button if visible
+        var searchButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions()
+                        .setName(Pattern.compile("^(Search|Recherche)$", Pattern.CASE_INSENSITIVE))).first();
+        if (searchButton.isVisible()) { searchButton.click(); }
+        var searchInput = page.locator("input#edit-search:visible, input[name='search']:visible").first();
+        searchInput.waitFor(new com.microsoft.playwright.Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        searchInput.click();
+        searchInput.fill(""); // Clear first
+        searchInput.pressSequentially(searchTerm); // Types characters individually to trigger JS listeners
+        searchInput.press("Enter");
+        assertThat(page).hasURL(Pattern.compile(".*search.*"));
     }
 
     @Then("the search results page should be displayed")

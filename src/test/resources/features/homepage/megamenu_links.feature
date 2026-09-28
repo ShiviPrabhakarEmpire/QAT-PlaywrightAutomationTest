@@ -7,10 +7,10 @@ Feature: Empire Life Mega Menu Sub-links
   Scenario: Navigate to Term Life Insurance from menu
     Given I launch the browser
     And I navigate to the Empire page "https://www.empire.ca/"
-    When I click on the "Term Life Insurance" link
+    When I click on the "Insurance" link
     Then I should be redirected to a page containing "term-life-insurance"
 
-  @EN
+
   Scenario: Navigate to Annuities from menu
     Given I launch the browser
     And I navigate to the Empire page "https://www.empire.ca/"
@@ -21,10 +21,10 @@ Feature: Empire Life Mega Menu Sub-links
   Scenario: Navigate to Assurance vie temporaire from menu
     Given I launch the browser
     And I navigate to the Empire page "https://www.empire.ca/fr"
-    When I click on the "Assurance vie temporaire" link
+    When I click on the "Assurance" link
     Then I should be redirected to a page containing "term-life-insurance"
 
-  @FR
+
   Scenario: Navigate to Rentes from menu
     Given I launch the browser
     And I navigate to the Empire page "https://www.empire.ca/fr"

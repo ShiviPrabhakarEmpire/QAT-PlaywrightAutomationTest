@@ -34,7 +34,7 @@ public class ExampleSteps {
 
     @Given("I launch the {string} browser")
     public void i_launch_the_browser(String browserName) {
-        boolean headless = Boolean.parseBoolean(System.getProperty("headless", "true"));
+        boolean headless = Boolean.parseBoolean(System.getProperty("headless", "false"));
         browser = BrowserLauncher.launch(playwright, browserName, headless);
         page = browser.newPage();
     }
