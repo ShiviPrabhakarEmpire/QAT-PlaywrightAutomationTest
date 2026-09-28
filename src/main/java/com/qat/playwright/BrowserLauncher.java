@@ -12,6 +12,7 @@ import java.util.Locale;
 public final class BrowserLauncher {
     private static final String TARGET_URL = "https://www.google.com";
 
+
     private BrowserLauncher() {
     }
 
