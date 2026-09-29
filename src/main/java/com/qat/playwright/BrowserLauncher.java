@@ -58,7 +58,8 @@ public final class BrowserLauncher {
     }
 
     public static Browser launch(Playwright playwright, String browserName, boolean headless) {
-        BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions().setHeadless(headless);
+        BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions()
+            .setHeadless(headless);
         return browserType(playwright, browserName).launch(launchOptions);
     }
 
