@@ -21,6 +21,15 @@ dependencies {
     // Cucumber
     testImplementation 'io.cucumber:cucumber-java:7.18.0'
     testImplementation 'io.cucumber:cucumber-junit-platform-engine:7.18.0'
+
+    // Cucumber + Playwright existing dependencies...
+
+    // ReportPortal Cucumber JVM agent
+    testImplementation 'com.epam.reportportal:agent-java-cucumber7:5.4.10'
+
+    // (Optional) Logger adapter if you use Logback or Log4j2
+    testImplementation 'com.epam.reportportal:logger-java-logback:5.2.2'
+
 }
 
 java {
@@ -41,12 +50,24 @@ tasks.register('installBrowsers', JavaExec) {
     args 'install'
 }
 
+tasks.register('installPlaywrightDeps', JavaExec) {
+    group = 'playwright'
+    description = 'Install OS dependencies for Playwright browsers.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.microsoft.playwright.CLI'
+    args 'install-deps'
+}
+
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
 test {
     useJUnitPlatform()
+    
+    // Pass all system properties to the test JVM
+    systemProperties System.properties
+
     // Optional: output test progress to console
     testLogging {
         events "passed", "skipped", "failed"
