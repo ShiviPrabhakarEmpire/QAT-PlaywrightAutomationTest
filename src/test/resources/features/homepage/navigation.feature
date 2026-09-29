@@ -9,7 +9,6 @@ Feature: Empire Life Homepage Navigation
     And I navigate to "https://www.empire.ca/"
     When I click on the "<menu_item>" link
     Then I should be redirected to a page containing "<expected_url_path>"
-
     Examples: 
       | menu_item      | expected_url_path |
       | Insurance      | /insurance        |
