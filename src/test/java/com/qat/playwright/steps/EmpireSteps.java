@@ -41,7 +41,7 @@ public class EmpireSteps {
     public void i_launch_the_browser() {
         String browserName = System.getProperty("browser", "chromium");
         String deviceName = System.getProperty("device", "Desktop");
-        boolean headless = Boolean.parseBoolean(System.getProperty("headless", "false"));
+        boolean headless = Boolean.parseBoolean(System.getProperty("headless", "true"));
         
         browser = BrowserLauncher.launch(playwright, browserName, headless);
         
