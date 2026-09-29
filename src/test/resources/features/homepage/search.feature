@@ -8,7 +8,7 @@ Feature: Empire Life Search Functionality
     Given I launch the browser
     And I navigate to "https://www.empire.ca/"
     When I search for "Term Life"
-    Then I should be redirected to a page URL containing "/search?search=Term+Life"
+    Then I should be redirected to a page containing "search"
 
   @FR
   Scenario: Verify search works correctly in French

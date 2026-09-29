@@ -8,7 +8,7 @@ Feature: Empire Life Homepage Navigation
     Given I launch the browser
     And I navigate to "https://www.empire.ca/"
     When I click on the "<menu_item>" link
-    Then I should be redirected to a page URL containing "<expected_url_path>"
+    Then I should be redirected to a page containing "<expected_url_path>"
     Examples: 
       | menu_item      | expected_url_path |
       | Insurance      | /insurance        |
