@@ -27,3 +27,20 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+
+# Runtime logs
+*.log
+mobile_run.log
+
+# Gradle build cache & output (generated at runtime)
+.gradle/
+build/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# Local sensitive configuration (if applicable)
+# gradle.properties
