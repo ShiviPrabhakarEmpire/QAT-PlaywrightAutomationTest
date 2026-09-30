@@ -85,6 +85,73 @@ public class EmpireSteps {
         page = context.newPage();
     }
 
+
+/*
+    // This new code working with all devices
+    @Given("I launch the browser")
+    public void i_launch_the_browser() {
+        String browserName = System.getProperty("browser", "chromium");
+        String rawDeviceName = System.getProperty("device", "Desktop");
+        boolean headless = Boolean.parseBoolean(System.getProperty("headless", "true"));
+
+        browser = BrowserLauncher.launch(playwright, browserName, headless);
+
+        if ("Desktop".equalsIgnoreCase(rawDeviceName)) {
+            context = browser.newContext();
+        } else {
+            Browser.NewContextOptions deviceOptions = getDynamicDeviceOptions(rawDeviceName, browserName);
+            context = browser.newContext(deviceOptions);
+        }
+
+        page = context.newPage();
+    }
+    private Browser.NewContextOptions getDynamicDeviceOptions(String rawDeviceName, String browserName) {
+        // Convert "iPhone_14_Pro" -> "iphone 14 pro"
+        String device = rawDeviceName.replace("_", " ").toLowerCase().trim();
+        Browser.NewContextOptions options = new Browser.NewContextOptions();
+
+        if (device.contains("iphone") || device.contains("ipad")) {
+            // Handle iPhone models dynamically based on generation
+            if (device.contains("pro max") || device.contains("plus")) {
+                options.setViewportSize(430, 932).setDeviceScaleFactor(3);
+            } else if (device.contains("pro") || device.contains("14") || device.contains("15") || device.contains("16")) {
+                options.setViewportSize(393, 852).setDeviceScaleFactor(3);
+            } else {
+                // Default iPhone/iPhone 12/13 profile
+                options.setViewportSize(390, 844).setDeviceScaleFactor(3);
+            }
+
+            options.setUserAgent("Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1")
+                    .setHasTouch(true);
+
+        } else if (device.contains("pixel") || device.contains("galaxy") || device.contains("android")) {
+            // Handle Android models dynamically
+            if (device.contains("ultra") || device.contains("plus")) {
+                options.setViewportSize(412, 915).setDeviceScaleFactor(3.5);
+            } else {
+                // Default Pixel/Galaxy profile
+                options.setViewportSize(393, 851).setDeviceScaleFactor(2.75);
+            }
+
+            options.setUserAgent("Mozilla/5.0 (Linux; Android 13; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36")
+                    .setHasTouch(true);
+
+        } else {
+            throw new IllegalArgumentException("Unsupported device specified in CLI: " + rawDeviceName);
+        }
+
+        // Set mobile flag for WebKit/Chromium (Firefox does not support isMobile)
+        if (!"firefox".equalsIgnoreCase(browserName)) {
+            options.setIsMobile(true);
+        }
+
+        return options;
+    }
+
+ */
+
+
+
     @When("I navigate to {string}")
     public void i_navigate_to(String url) {
         page.navigate(url);
