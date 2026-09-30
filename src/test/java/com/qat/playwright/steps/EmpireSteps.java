@@ -37,7 +37,7 @@ public class EmpireSteps {
         }
     }
 
-/*    @Given("I launch the browser")
+    @Given("I launch the browser")
     public void i_launch_the_browser() {
         String browserName = System.getProperty("browser", "chromium");
         String deviceName = System.getProperty("device", "Desktop");
@@ -73,25 +73,9 @@ public class EmpireSteps {
         page = context.newPage();
     }
 
- */
 
-    @Given("I launch the browser")
-    public void i_launch_the_browser() {
-        String browserName = System.getProperty("browser", "chromium");
-        String rawDeviceName = System.getProperty("device", "Desktop");
-        boolean headless = Boolean.parseBoolean(System.getProperty("headless", "true"));
 
-        browser = BrowserLauncher.launch(playwright, browserName, headless);
 
-        if ("Desktop".equalsIgnoreCase(rawDeviceName)) {
-            context = browser.newContext();
-        } else {
-            Browser.NewContextOptions deviceOptions = getDynamicDeviceOptions(rawDeviceName, browserName);
-            context = browser.newContext(deviceOptions);
-        }
-
-        page = context.newPage();
-    }
 
     private Browser.NewContextOptions getDynamicDeviceOptions(String rawDeviceName, String browserName) {
         // Convert "iPhone_14_Pro" -> "iphone 14 pro"
