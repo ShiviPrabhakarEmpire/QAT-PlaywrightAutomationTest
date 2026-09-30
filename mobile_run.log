@@ -1,0 +1,40 @@
+Starting a Gradle Daemon, 1 busy and 2 stopped Daemons could not be reused, use --status for details
+> Task :compileJava UP-TO-DATE
+> Task :processResources NO-SOURCE
+> Task :classes UP-TO-DATE
+> Task :compileTestJava UP-TO-DATE
+> Task :processTestResources UP-TO-DATE
+> Task :testClasses UP-TO-DATE
+
+> Task :parityTest
+
+CucumberTestRunner > Parity Testing for English Empire Site > Verify structural and visual parity for English Homepage FAILED
+    org.opentest4j.AssertionFailedError at Constructor.java:502
+
+CucumberTestRunner > Parity Testing for English Empire Site > Verify structural and visual parity for English Search Page FAILED
+    org.opentest4j.AssertionFailedError at Constructor.java:502
+
+CucumberTestRunner > Parity Testing for French Empire Site > Verify structural and visual parity for French Homepage FAILED
+    org.opentest4j.AssertionFailedError at Constructor.java:502
+
+CucumberTestRunner > Parity Testing for French Empire Site > Verify structural and visual parity for French Search Page FAILED
+    org.opentest4j.AssertionFailedError at Constructor.java:502
+
+4 tests completed, 4 failed
+
+> Task :parityTest FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':parityTest' (registered in build file 'build.gradle').
+> java.nio.file.NoSuchFileException: /Users/shiviprabhakar/QAT-PlaywrightAutomationTest/build/test-results/parityTest/binary/in-progress-results-generic.bin
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 41s
+4 actionable tasks: 1 executed, 3 up-to-date
