@@ -21,6 +21,7 @@ dependencies {
     // Cucumber
     testImplementation 'io.cucumber:cucumber-java:7.18.0'
     testImplementation 'io.cucumber:cucumber-junit-platform-engine:7.18.0'
+    testImplementation 'io.cucumber:cucumber-picocontainer:7.18.0'
 
     // Parity Testing Dependencies
     testImplementation 'com.github.romankh3:image-comparison:4.4.0'
@@ -61,36 +62,21 @@ tasks.withType(JavaCompile).configureEach {
 
 test {
     useJUnitPlatform {
-        excludeTags 'parity'
+        if (project.hasProperty('parity')) {
+            includeTags 'parity'
+        } else {
+            excludeTags 'parity'
+        }
     }
+    
+    // Pass base.url and target.url system properties dynamically with default fallback
+    systemProperty 'base.url', System.getProperty('base.url', 'https://www.empire.ca')
+    systemProperty 'target.url', System.getProperty('target.url', 'https://www.empire.ca/fr')
     
     // Pass all system properties to the test JVM
     systemProperties System.properties
 
     // Optional: output test progress to console
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
-}
-
-tasks.register('parityTest', Test) {
-    description = 'Runs visual and structural parity tests.'
-    group = 'verification'
-    
-    testClassesDirs = sourceSets.test.output.classesDirs
-    classpath = sourceSets.test.runtimeClasspath
-    
-    useJUnitPlatform {
-        includeTags 'parity'
-    }
-    
-    outputs.upToDateWhen { false }
-    
-    // Pass base.url and target.url system properties dynamically with default fallback
-    systemProperty 'base.url', System.getProperty('base.url', 'https://www.empire.ca')
-    systemProperty 'target.url', System.getProperty('target.url', 'https://www.empire.ca/fr')
-    systemProperties System.properties
-
     testLogging {
         events "passed", "skipped", "failed"
     }

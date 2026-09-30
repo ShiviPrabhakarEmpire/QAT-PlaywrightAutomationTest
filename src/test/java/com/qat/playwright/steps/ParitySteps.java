@@ -30,11 +30,11 @@ public class ParitySteps {
     @Before("@parity")
     public void setupParity() {
         playwright = Playwright.create();
-        boolean headless = Boolean.parseBoolean(System.getProperty("headless", "true"));
-        String browserName = System.getProperty("browser", "chromium");
+        boolean headless = Boolean.parseBoolean(com.qat.playwright.utils.ConfigReader.getProperty("HEADLESS", "true"));
+        String browserName = com.qat.playwright.utils.ConfigReader.getProperty("BROWSER", "chromium");
         browser = BrowserLauncher.launch(playwright, browserName, headless);
 
-        String deviceName = System.getProperty("device", "Desktop");
+        String deviceName = com.qat.playwright.utils.ConfigReader.getProperty("DEVICE", "Desktop");
         Browser.NewContextOptions options = new Browser.NewContextOptions();
 
         if ("Desktop".equalsIgnoreCase(deviceName)) {
@@ -53,7 +53,7 @@ public class ParitySteps {
                             options.setViewportSize(d.getAsJsonObject("viewport").get("width").getAsInt(), d.getAsJsonObject("viewport").get("height").getAsInt());
                             options.setDeviceScaleFactor(d.get("deviceScaleFactor").getAsDouble());
                             options.setHasTouch(d.get("hasTouch").getAsBoolean());
-                            if (!"firefox".equalsIgnoreCase(System.getProperty("browser", "chromium"))) {
+                            if (!"firefox".equalsIgnoreCase(com.qat.playwright.utils.ConfigReader.getProperty("BROWSER", "chromium"))) {
                                 options.setIsMobile(d.get("isMobile").getAsBoolean());
                             }
                         } else {
@@ -87,11 +87,11 @@ public class ParitySteps {
 
     @When("I load the base URL {string} and target URL {string}")
     public void i_load_urls(String baseUrl, String targetUrl) {
-        // Resolve targetUrl via system property if dynamic override is required, fallback to feature file URL
-        String envTargetUrl = System.getProperty("target.url");
+        // Resolve targetUrl via ConfigReader if dynamic override is required, fallback to feature file URL
+        String envTargetUrl = com.qat.playwright.utils.ConfigReader.getProperty("TARGET_URL");
         String finalTargetUrl = (envTargetUrl != null && !envTargetUrl.isEmpty()) ? envTargetUrl : targetUrl;
         
-        String envBaseUrl = System.getProperty("base.url");
+        String envBaseUrl = com.qat.playwright.utils.ConfigReader.getProperty("BASE_URL");
         String finalBaseUrl = (envBaseUrl != null && !envBaseUrl.isEmpty()) ? envBaseUrl : baseUrl;
 
         // Playwright objects are not thread-safe. Must be run synchronously on the main thread.
