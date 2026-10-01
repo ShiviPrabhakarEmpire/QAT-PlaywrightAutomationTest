@@ -33,4 +33,5 @@ fi
 
 echo "🚀 Running tests with arguments: $@"
 # Pass all CLI arguments directly to gradle test
+export NODE_TLS_REJECT_UNAUTHORIZED=0
 ./gradlew test "$@"

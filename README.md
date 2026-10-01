@@ -97,18 +97,6 @@ CucumberTestRunner > Parity Testing for English Empire Site > Verify structural 
     org.opentest4j.AssertionFailedError at Constructor.java:502
 ```
 
-### Visual Regression & Parity Artifacts
-
-If a visual regression fails, the framework extracts the differences automatically and overlays them with red highlighters.
-
-![Visual Parity Difference Output](/Users/shiviprabhakar/.gemini/antigravity-ide/brain/5a567879-bc29-4805-bc27-020c513a8251/visual_diff_screenshot_1790791153387.jpg)
-
-### Automated Test Report Dashboard
-
-Tests output a clean HTML suite log confirming the DOM parity and Element Styling status.
-
-![Parity HTML Report](/Users/shiviprabhakar/.gemini/antigravity-ide/brain/5a567879-bc29-4805-bc27-020c513a8251/parity_report_screenshot_1790791140151.jpg)
-
 ## Advanced Execution Options
 
 The core runner allows launching headed browsers manually. 
