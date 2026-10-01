@@ -81,3 +81,24 @@ test {
         events "passed", "skipped", "failed"
     }
 }
+task parityTest(type: JavaExec) {
+    description = 'Runs Cucumber parity tests'
+    group = 'verification'
+
+    // Ensure test code compiles first
+    dependsOn compileTestJava
+
+    // Supply the test runtime classpath (includes JSoup, Playwright, Cucumber, etc.)
+    classpath = sourceSets.test.runtimeClasspath
+
+    // Execute Cucumber CLI runner
+    mainClass = 'io.cucumber.core.cli.Main'
+
+    // Cucumber CLI arguments
+    args = [
+            '--plugin', 'pretty',
+            '--plugin', 'html:build/reports/tests/parity-report.html',
+            '--glue', 'com.qat.playwright',
+            'src/test/resources/features/parity'
+    ]
+}

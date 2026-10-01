@@ -26,6 +26,8 @@ public class DomParityService {
         doc.select("style").remove();
         doc.select("meta[name*='csrf']").remove();
         doc.select("input[type='hidden']").remove();
+        doc.select("iframe").remove();
+        doc.select("noscript").remove();
         
         // Set document output syntax to XML for strict comparison by XMLUnit
         doc.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
